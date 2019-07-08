@@ -52,4 +52,42 @@ final class KeyPrefix implements CacheInterface
     {
         return $this->cache->delete($this->prefix . $key);
     }
+
+    public function getMultiple(array $keys, $default = null)
+    {
+        foreach ($keys as $index => $key) {
+            $keys[$index] = $this->prefix . $key;
+        }
+
+        return $this->cache->getMultiple($keys);
+    }
+
+    public function setMultiple(array $values, $ttl = null)
+    {
+        $newValues = [];
+        foreach ($values as $key => $value) {
+            $newValues[$this->prefix . $key] = $value;
+        }
+
+        return $this->cache->setMultiple($newValues);
+    }
+
+    public function deleteMultiple(array $keys)
+    {
+        foreach ($keys as $index => $key) {
+            $keys[$index] = $this->prefix . $key;
+        }
+
+        return $this->cache->deleteMultiple($keys);
+    }
+
+    public function clear()
+    {
+        return $this->cache->clear();
+    }
+
+    public function has($key)
+    {
+        return $this->cache->has($this->prefix . $key);
+    }
 }

@@ -47,6 +47,15 @@ final class KeyPrefixTest extends TestCase
         $jsonCache->set($key, $string);
     }
 
+    public function testClear(): void
+    {
+        $cache = $this->prophesize(CacheInterface::class);
+        $cache->clear()->shouldBeCalled();
+
+        $jsonCache = new KeyPrefix('prefix:', $cache->reveal());
+        $jsonCache->clear();
+    }
+
     public function testDelete(): void
     {
         $key = 'sleutel';
@@ -56,5 +65,49 @@ final class KeyPrefixTest extends TestCase
 
         $jsonCache = new KeyPrefix('prefix:', $cache->reveal());
         $jsonCache->delete($key);
+    }
+
+    public function testHas(): void
+    {
+        $key = 'sleutel';
+
+        $cache = $this->prophesize(CacheInterface::class);
+        $cache->has('prefix:' . $key)->shouldBeCalled();
+
+        $jsonCache = new KeyPrefix('prefix:', $cache->reveal());
+        $jsonCache->has($key);
+    }
+
+    public function testGetMultiple(): void
+    {
+        $key = 'sleutel';
+
+        $cache = $this->prophesize(CacheInterface::class);
+        $cache->getMultiple(['prefix:' . $key])->shouldBeCalled();
+
+        $jsonCache = new KeyPrefix('prefix:', $cache->reveal());
+        $jsonCache->getMultiple([$key]);
+    }
+
+    public function testDeleteMultiple(): void
+    {
+        $key = 'sleutel';
+
+        $cache = $this->prophesize(CacheInterface::class);
+        $cache->deleteMultiple(['prefix:' . $key])->shouldBeCalled();
+
+        $jsonCache = new KeyPrefix('prefix:', $cache->reveal());
+        $jsonCache->deleteMultiple([$key]);
+    }
+
+    public function testSetMultiple(): void
+    {
+        $key = 'sleutel';
+
+        $cache = $this->prophesize(CacheInterface::class);
+        $cache->setMultiple(['prefix:' . $key => 'value'])->shouldBeCalled();
+
+        $jsonCache = new KeyPrefix('prefix:', $cache->reveal());
+        $jsonCache->setMultiple([$key => 'value']);
     }
 }
