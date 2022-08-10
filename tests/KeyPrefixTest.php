@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WyriHaximus\Tests\React\Cache;
 
 use React\Cache\CacheInterface;
-use function React\Promise\resolve;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\React\Cache\KeyPrefix;
+
+use function React\Promise\resolve;
 
 /**
  * @internal
@@ -14,7 +17,7 @@ final class KeyPrefixTest extends AsyncTestCase
 {
     public function testGet(): void
     {
-        $key = 'sleutel';
+        $key    = 'sleutel';
         $string = '{"foo":"bar"}';
 
         $cache = $this->prophesize(CacheInterface::class);
@@ -37,7 +40,7 @@ final class KeyPrefixTest extends AsyncTestCase
 
     public function testSet(): void
     {
-        $key = 'sleutel';
+        $key    = 'sleutel';
         $string = '{"foo":"bar"}';
 
         $cache = $this->prophesize(CacheInterface::class);
